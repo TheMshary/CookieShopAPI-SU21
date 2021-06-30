@@ -1,7 +1,7 @@
 const cookies = [
   {
     id: 1,
-    name: "Sea Horse Cookie",
+    name: "Chocolate Chip Cookie",
     slug: "chocolate-chip-cookie",
     price: 10,
     description: "Swiss chocolate chip🇨🇭. Calories: 215 Kcal",

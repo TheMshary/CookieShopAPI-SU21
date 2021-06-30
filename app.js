@@ -52,6 +52,21 @@ app.post("/cookies", (req, res) => {
 });
 
 // Update Route
+app.put("/cookies/:cookieId", (req, res) => {
+  const { cookieId } = req.params;
+  // check if cookie exists
+  const foundCookie = cookies.find((cookie) => cookie.id === +cookieId);
+  // if cookie exists:
+  if (foundCookie) {
+    // update cookie
+    for (const key in req.body) foundCookie[key] = req.body[key];
+    foundCookie.slug = slugify(foundCookie.name, { lower: true });
+    res.status(204).end();
+  } else {
+    //  give back response 404 Cookie Not Found
+    res.status(404).json({ message: "Cookie Not Found." });
+  }
+});
 
 app.listen(8000, () => {
   console.log("The application is running on localhost:8000");
