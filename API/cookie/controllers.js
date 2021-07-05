@@ -1,9 +1,15 @@
-let cookies = require("../../cookies");
 const slugify = require("slugify");
+const { Cookie } = require("../../db/models");
 
-exports.cookieFetch = (req, res) => {
-  // JSON = JavaScript Object Notation
-  res.json(cookies);
+exports.cookieFetch = async (req, res) => {
+  try {
+    const cookies = await Cookie.findAll({
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
+    res.json(cookies);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 exports.deleteCookie = (req, res) => {
