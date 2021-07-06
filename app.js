@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 //=============== Cookie Routes ===============\\
 app.use("/cookies", cookieRoutes);
-
+app.use("/media", express.static("media"));
 // Error Handling Middleware
 app.use((err, req, res, next) => {
   res

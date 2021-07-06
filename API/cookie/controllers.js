@@ -22,6 +22,7 @@ exports.cookieFetch = async (req, res, next) => {
 
 exports.createCookie = async (req, res, next) => {
   try {
+    if (req.file) req.body.image = `http://${req.get("host")}/${req.file.path}`;
     const newCookie = await Cookie.create(req.body);
     // response: 201 CREATED
     res.status(201).json(newCookie);
@@ -41,8 +42,9 @@ exports.deleteCookie = async (req, res, next) => {
 
 exports.updateCookie = async (req, res, next) => {
   try {
-    await req.cookie.update(req.body);
-    res.status(204).end();
+    if (req.file) req.body.image = `http://${req.get("host")}/${req.file.path}`;
+    const updatedCookie = await req.cookie.update(req.body);
+    res.json(updatedCookie);
   } catch (error) {
     next(error);
   }

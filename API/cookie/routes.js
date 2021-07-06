@@ -7,6 +7,8 @@ const {
   updateCookie,
   fetchCookie,
 } = require("./controllers");
+
+const multer = require("multer");
 const router = express.Router();
 
 // param middleware (parameter)
@@ -25,6 +27,14 @@ router.param("cookieId", async (req, res, next, cookieId) => {
   }
 });
 
+//multer
+const storage = multer.diskStorage({
+  destination: "./media",
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}${file.originalname}`);
+  },
+});
+const upload = multer({ storage });
 // List Route
 router.get("/", cookieFetch);
 
@@ -32,9 +42,9 @@ router.get("/", cookieFetch);
 router.delete("/:cookieId", deleteCookie);
 
 // Create Route
-router.post("/", createCookie);
+router.post("/", upload.single("image"), createCookie);
 
 // Update Route
-router.put("/:cookieId", updateCookie);
+router.put("/:cookieId", upload.single("image"), updateCookie);
 
 module.exports = router;
