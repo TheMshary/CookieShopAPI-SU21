@@ -1,4 +1,4 @@
-const { Cookie } = require("../../db/models");
+const { Cookie, Bakery } = require("../../db/models");
 
 exports.fetchCookie = async (cookieId, next) => {
   try {
@@ -12,20 +12,14 @@ exports.fetchCookie = async (cookieId, next) => {
 exports.cookieFetch = async (req, res, next) => {
   try {
     const cookies = await Cookie.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
+      attributes: { exclude: ["bakeryId", "createdAt", "updatedAt"] },
+      include: {
+        model: Bakery,
+        as: "bakery",
+        attributes: ["name"],
+      },
     });
     res.json(cookies);
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.createCookie = async (req, res, next) => {
-  try {
-    if (req.file) req.body.image = `http://${req.get("host")}/${req.file.path}`;
-    const newCookie = await Cookie.create(req.body);
-    // response: 201 CREATED
-    res.status(201).json(newCookie);
   } catch (error) {
     next(error);
   }

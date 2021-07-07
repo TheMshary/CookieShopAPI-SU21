@@ -3,7 +3,6 @@ const express = require("express");
 const {
   cookieFetch,
   deleteCookie,
-  createCookie,
   updateCookie,
   fetchCookie,
 } = require("./controllers");
@@ -40,9 +39,6 @@ router.get("/", cookieFetch);
 
 // Delete Route
 router.delete("/:cookieId", deleteCookie);
-
-// Create Route
-router.post("/", upload.single("image"), createCookie);
 
 // Update Route
 router.put("/:cookieId", upload.single("image"), updateCookie);
