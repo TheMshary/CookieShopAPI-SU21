@@ -4,6 +4,7 @@ const cors = require("cors"); // yarn add cors
 const bodyParser = require("body-parser");
 const cookieRoutes = require("./API/cookie/routes");
 const bakeryRoutes = require("./API/bakery/routes");
+const userRoutes = require("./API/user/routes");
 
 //database
 const db = require("./db/models/index");
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 //=============== Cookie Routes ===============\\
 app.use("/cookies", cookieRoutes);
 app.use("/bakeries", bakeryRoutes);
+app.use(userRoutes);
 app.use("/media", express.static("media"));
 // Error Handling Middleware
 app.use((err, req, res, next) => {
