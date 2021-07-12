@@ -55,4 +55,11 @@ db.Cookie.belongsTo(db.Bakery, {
   foreignKey: "bakeryId",
 });
 
+db.User.hasOne(db.Bakery, {
+  as: "bakery",
+  foreignKey: "userId",
+});
+
+db.Bakery.belongsTo(db.User, { as: "user" });
+
 module.exports = db;

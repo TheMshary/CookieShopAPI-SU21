@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const passport = require("passport");
 const {
   bakeryFetch,
   createBakery,
@@ -37,9 +38,19 @@ router.param("bakeryId", async (req, res, next, bakeryId) => {
 router.get("/", bakeryFetch);
 
 // Create Route
-router.post("/", upload.single("image"), createBakery);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  createBakery
+);
 
 // Create Route
-router.post("/:bakeryId/cookies", upload.single("image"), createCookie);
+router.post(
+  "/:bakeryId/cookies",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  createCookie
+);
 
 module.exports = router;
