@@ -8,6 +8,7 @@ const {
 } = require("./controllers");
 
 const multer = require("multer");
+const passport = require("passport");
 const router = express.Router();
 
 // param middleware (parameter)
@@ -38,9 +39,18 @@ const upload = multer({ storage });
 router.get("/", cookieFetch);
 
 // Delete Route
-router.delete("/:cookieId", deleteCookie);
+router.delete(
+  "/:cookieId",
+  passport.authenticate("jwt", { session: false }),
+  deleteCookie
+);
 
 // Update Route
-router.put("/:cookieId", upload.single("image"), updateCookie);
+router.put(
+  "/:cookieId",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  updateCookie
+);
 
 module.exports = router;
