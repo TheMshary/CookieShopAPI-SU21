@@ -2,9 +2,13 @@
 const express = require("express");
 const cors = require("cors"); // yarn add cors
 const bodyParser = require("body-parser");
+
+//routes
 const cookieRoutes = require("./API/cookie/routes");
 const bakeryRoutes = require("./API/bakery/routes");
 const userRoutes = require("./API/user/routes");
+const orderRoutes = require("./API/order/routes");
+
 const passport = require("passport");
 const { localStrategy } = require("./middleware/passport");
 const { jwtStrategy } = require("./middleware/passport");
@@ -23,6 +27,7 @@ passport.use(jwtStrategy);
 //=============== Cookie Routes ===============\\
 app.use("/cookies", cookieRoutes);
 app.use("/bakeries", bakeryRoutes);
+app.use(orderRoutes);
 app.use(userRoutes);
 app.use("/media", express.static("media"));
 // Error Handling Middleware
